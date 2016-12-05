@@ -6,7 +6,12 @@ body {
   padding-bottom: 56px; }
 
 #main {
-  padding-left: 0; }
+  padding-left: 0;
+}
+
+.playlist-item {
+  padding-left: 15px;
+}
 
 sidebar {
   position: fixed;

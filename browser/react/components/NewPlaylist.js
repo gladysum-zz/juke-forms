@@ -1,6 +1,7 @@
 import React from 'react';
 
 const NewPlaylist = (props) => {
+
 	return (
 		<div className="well">
 		  <form className="form-horizontal" onSubmit = {props.handleSubmit} >
