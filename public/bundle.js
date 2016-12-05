@@ -80,7 +80,7 @@
 	
 	var _Songs2 = _interopRequireDefault(_Songs);
 	
-	var _NewPlaylistContainer = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"./components/NewPlaylistContainer\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var _NewPlaylistContainer = __webpack_require__(269);
 	
 	var _NewPlaylistContainer2 = _interopRequireDefault(_NewPlaylistContainer);
 	
@@ -28756,7 +28756,94 @@
 	exports.default = Artist;
 
 /***/ },
-/* 269 */,
+/* 269 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _NewPlaylist = __webpack_require__(272);
+	
+	var _NewPlaylist2 = _interopRequireDefault(_NewPlaylist);
+	
+	var _axios = __webpack_require__(234);
+	
+	var _axios2 = _interopRequireDefault(_axios);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var NewPlayListContainer = function (_React$Component) {
+		_inherits(NewPlayListContainer, _React$Component);
+	
+		function NewPlayListContainer(props) {
+			_classCallCheck(this, NewPlayListContainer);
+	
+			var _this = _possibleConstructorReturn(this, (NewPlayListContainer.__proto__ || Object.getPrototypeOf(NewPlayListContainer)).call(this, props));
+	
+			_this.state = {
+				inputValue: "",
+				submitDisable: false
+			};
+			return _this;
+		}
+	
+		_createClass(NewPlayListContainer, [{
+			key: 'getInput',
+			value: function getInput(event) {
+				this.setState({
+					inputValue: event.target.value,
+					submitDisable: event.target.value.length === 0 || event.target.value.length > 16
+				});
+			}
+		}, {
+			key: 'handleSubmit',
+			value: function handleSubmit(event) {
+				event.preventDefault();
+				console.log(this.state.inputValue);
+				_axios2.default.post('/api/playlists', { playlist: "dummy" }).then(function (res) {
+					return res.data;
+				}).then(function (result) {
+					console.log(result); // response json from the server!
+				}).catch(console.error);
+			}
+		}, {
+			key: 'render',
+			value: function render() {
+				console.log("test", this.state.submitDisable, this.state.inputValue.length);
+				return _react2.default.createElement(
+					'div',
+					null,
+					_react2.default.createElement(_NewPlaylist2.default, { inputValue: this.state.inputValue, getInput: this.getInput.bind(this), handleSubmit: this.handleSubmit.bind(this) }),
+					this.state.submitDisable ? _react2.default.createElement(
+						'div',
+						{ className: 'alert alert-warning' },
+						'Please enter a name'
+					) : null
+				);
+			}
+		}]);
+	
+		return NewPlayListContainer;
+	}(_react2.default.Component);
+	
+	exports.default = NewPlayListContainer;
+
+/***/ },
 /* 270 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -28861,6 +28948,71 @@
 	};
 	
 	exports.default = FilterInput;
+
+/***/ },
+/* 272 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var NewPlaylist = function NewPlaylist(props) {
+		return _react2.default.createElement(
+			"div",
+			{ className: "well" },
+			_react2.default.createElement(
+				"form",
+				{ className: "form-horizontal", onSubmit: props.handleSubmit },
+				_react2.default.createElement(
+					"fieldset",
+					null,
+					_react2.default.createElement(
+						"legend",
+						null,
+						"New Playlist"
+					),
+					_react2.default.createElement(
+						"div",
+						{ className: "form-group" },
+						_react2.default.createElement(
+							"label",
+							{ className: "col-xs-2 control-label" },
+							"Name"
+						),
+						_react2.default.createElement(
+							"div",
+							{ className: "col-xs-10" },
+							_react2.default.createElement("input", { className: "form-control", value: props.inputValue, onChange: props.getInput, type: "text" })
+						)
+					),
+					_react2.default.createElement(
+						"div",
+						{ className: "form-group" },
+						_react2.default.createElement(
+							"div",
+							{ className: "col-xs-10 col-xs-offset-2" },
+							_react2.default.createElement(
+								"button",
+								{ type: "submit", className: "btn btn-success", disabled: props.submitDisable },
+								"Create Playlist"
+							)
+						)
+					)
+				)
+			)
+		);
+	};
+	
+	exports.default = NewPlaylist;
 
 /***/ }
 /******/ ]);
